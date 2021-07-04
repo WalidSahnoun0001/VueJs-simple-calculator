@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+        body {
+            background-color: #eee;
+        }
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background-color: #707d80;
+            padding: 20px 10px;
+            border-radius: 10px;
+        }
+        .container .screen {
+            margin-bottom: 10px;
+        }
+        .container .screen input {
+            width: 240px;
+            height: 45px;
+            border: none;
+            padding: 0 10px;
+            pointer-events: none;
+            font-weight: bold;
+            border-radius: 10px;
+        }
+        .container .controls button {
+            border: none;
+            width: 50px;
+            height: 50px;
+            background-color: #333333;
+            margin: 4px 4px;
+            color: #fff;
+            border-radius: 10px;
+        }
+        .container .controls button.special {
+            width: 45%;
+            background-color: #e63946;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="screen">
+            <input type="text" name="display" v-model="screen">
+        </div>
+        <div class="controls">
+            <div class="controls-row">
+                <button v-on:click="clearScreen()">C</button>
+                <button v-on:click="deleteOne()">Del</button>
+                <button v-on:click="fill('%')">%</button>
+                <button v-on:click="fill('*')">*</button>
+            </div>
+            <div class="controls-row">
+                <button v-on:click="fill(7)">7</button>
+                <button v-on:click="fill(8)">8</button>
+                <button v-on:click="fill(9)">9</button>
+                <button v-on:click="fill('/')">/</button>
+            </div>
+            <div class="controls-row">
+                <button v-on:click="fill(4)">4</button>
+                <button v-on:click="fill(5)">5</button>
+                <button v-on:click="fill(6)">6</button>
+                <button v-on:click="fill('-')">-</button>
+            </div>
+            <div class="controls-row">
+                <button v-on:click="fill(1)">1</button>
+                <button v-on:click="fill(2)">2</button>
+                <button v-on:click="fill(3)">3</button>
+                <button v-on:click="fill('+')">+</button>
+            </div>
+            <div class="controls-row">
+                <button v-on:click="fill(0)">0</button>
+                <button v-on:click="fill(0)">.</button>
+                <button class="special" v-on:click="calculate()">=</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '.container',
+            data: {
+                screen: ''
+            },
+            methods: {
+                fill: function (ele) {
+                    this.screen += ele;
+                },
+                clearScreen: function() {
+                    this.screen = '';
+                },
+                deleteOne: function() {
+                    let disp = this.screen;
+                    this.screen = disp.substring(0, disp.length -1);
+                },
+                calculate: function () {
+                    this.screen = eval(this.screen);
+                }
+            }
+        })
+    </script>
+</body>
+</html>
